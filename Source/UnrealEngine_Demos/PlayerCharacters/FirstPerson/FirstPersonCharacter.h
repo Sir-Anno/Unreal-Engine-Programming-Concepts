@@ -3,7 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "InputActionValue.h"
 #include "GameFramework/Character.h"
+#include "UnrealEngine_Demos/Interfaces/InteractInterface.h"
 #include "FirstPersonCharacter.generated.h"
 
 class UCameraComponent;
@@ -12,7 +14,7 @@ class UInputAction;
 struct FInputActionValue;
 
 UCLASS()
-class UNREALENGINE_DEMOS_API AFirstPersonCharacter : public ACharacter
+class UNREALENGINE_DEMOS_API AFirstPersonCharacter : public ACharacter, public IInteractInterface
 {
 	GENERATED_BODY()
 
@@ -36,6 +38,10 @@ class UNREALENGINE_DEMOS_API AFirstPersonCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UInputAction> JumpAction;
 
+	// Interact Input Action
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UInputAction> InteractAction;
+
 public:
 	// Sets default values for this character's properties
 	AFirstPersonCharacter();
@@ -44,7 +50,6 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
@@ -53,4 +58,11 @@ public:
 
 	// Called for looking input
 	void Look(const FInputActionValue& Value);
+
+	// Called for interact input
+	void InteractInput(const FInputActionValue& Value);
+
+	// Interact event
+	UFUNCTION(Server, Reliable)
+	void Server_InteractEvent();
 };
