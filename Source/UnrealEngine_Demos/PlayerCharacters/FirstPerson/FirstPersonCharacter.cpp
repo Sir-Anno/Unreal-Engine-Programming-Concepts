@@ -104,7 +104,7 @@ void AFirstPersonCharacter::Server_InteractEvent_Implementation()
 	FRotator Rotation;
 	GetController()->GetPlayerViewPoint(Location, Rotation); // Location and rotation of the players view from camera
 
-	// Create start and end points for our trace using players view
+	// Create start and end points for line trace using players view
 	FVector Start = Location;
 	FVector End = Start + (Rotation.Vector() * 1000);
 	
