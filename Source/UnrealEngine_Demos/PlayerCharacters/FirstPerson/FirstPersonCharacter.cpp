@@ -6,6 +6,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
+#include "KismetTraceUtils.h"
 
 // Sets default values
 AFirstPersonCharacter::AFirstPersonCharacter()
@@ -48,6 +49,9 @@ void AFirstPersonCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInp
 		// Jumping
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
+
+		// Interaction
+		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Started, this, &AFirstPersonCharacter::InteractInput);
 	}
 }
 
@@ -85,4 +89,42 @@ void AFirstPersonCharacter::Look(const FInputActionValue& Value)
 		AddControllerYawInput(LookAxisVector.X);
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
+}
+
+// Interaction
+void AFirstPersonCharacter::InteractInput(const FInputActionValue& Value)
+{
+	Server_InteractEvent();
+}
+
+// Interact event, runs on server
+void AFirstPersonCharacter::Server_InteractEvent_Implementation()
+{
+	FVector Location;
+	FRotator Rotation;
+	GetController()->GetPlayerViewPoint(Location, Rotation); // Location and rotation of the players view from camera
+
+	// Create start and end points for our trace using players view
+	FVector Start = Location;
+	FVector End = Start + (Rotation.Vector() * 1000);
+	
+	// Trace params
+	FHitResult HitResult;
+	FCollisionQueryParams Params;
+	Params.AddIgnoredActor(this);
+	ETraceTypeQuery TraceType = TraceTypeQuery1;
+	
+	// Did we hit something?
+	if (GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECC_Visibility, Params)) 
+	{
+		// Does hit actor inherit from interact interface?
+		if (IInteractInterface* InteractInterface = Cast<IInteractInterface>(HitResult.GetActor())) 
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Cyan, FString::Printf(TEXT("Interacting with: %s"), *HitResult.GetActor()->GetName()));
+			// UE_LOG(LogTemp, Warning, TEXT("Interacting with: %s"), *HitResult.GetActor()->GetName());
+			InteractInterface->Interact();
+		}
+	}
+	// Debug line trace
+	DrawDebugLineTraceSingle(GetWorld(), Start, End, EDrawDebugTrace::ForDuration, HitResult.IsValidBlockingHit(), HitResult, FColor::Red, FColor::Green, 2.0f);
 }
