@@ -112,7 +112,6 @@ void AFirstPersonCharacter::Server_InteractEvent_Implementation()
 	FHitResult HitResult;
 	FCollisionQueryParams Params;
 	Params.AddIgnoredActor(this);
-	ETraceTypeQuery TraceType = TraceTypeQuery1;
 	
 	// Did we hit something?
 	if (GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECC_Visibility, Params)) 
