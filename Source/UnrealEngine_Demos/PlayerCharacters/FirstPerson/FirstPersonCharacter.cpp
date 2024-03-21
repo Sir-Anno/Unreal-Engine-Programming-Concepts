@@ -121,7 +121,6 @@ void AFirstPersonCharacter::Server_InteractEvent_Implementation()
 		if (IInteractInterface* InteractInterface = Cast<IInteractInterface>(HitResult.GetActor())) 
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Cyan, FString::Printf(TEXT("Interacting with: %s"), *HitResult.GetActor()->GetName()));
-			// UE_LOG(LogTemp, Warning, TEXT("Interacting with: %s"), *HitResult.GetActor()->GetName());
 			InteractInterface->Interact();
 		}
 	}
