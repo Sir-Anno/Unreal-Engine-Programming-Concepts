@@ -14,7 +14,7 @@ AInteractTestActor::AInteractTestActor()
 void AInteractTestActor::Interact()
 {
 	// Check is server authoritative
-	if (!HasAuthority()) return
+	if (!HasAuthority()) return;
 	
 	GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Green, TEXT("Hello I am a cube :D"));
 }
