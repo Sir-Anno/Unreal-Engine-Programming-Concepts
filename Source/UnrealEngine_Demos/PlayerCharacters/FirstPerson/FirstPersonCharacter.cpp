@@ -100,13 +100,9 @@ void AFirstPersonCharacter::InteractInput(const FInputActionValue& Value)
 // Interact event, runs on server
 void AFirstPersonCharacter::Server_InteractEvent_Implementation()
 {
-	FVector Location;
-	FRotator Rotation;
-	GetController()->GetPlayerViewPoint(Location, Rotation); // Location and rotation of the players view from camera
-
 	// Create start and end points for line trace using players view
-	FVector Start = Location;
-	FVector End = Start + (Rotation.Vector() * 1000);
+	FVector Start = GetPawnViewLocation();
+	FVector End = Start + (GetViewRotation().Vector() * 1000);
 	
 	// Trace params
 	FHitResult HitResult;
