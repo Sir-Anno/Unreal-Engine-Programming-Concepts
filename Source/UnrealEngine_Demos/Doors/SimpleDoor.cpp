@@ -75,16 +75,10 @@ void ASimpleDoor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifet
 void ASimpleDoor::BeginCollisionOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
 	// Check is server authoritative 
-	if (!HasAuthority())
-	{
-		return;
-	}
+	if (!HasAuthority()) return;
 
 	// Check is character
-	if (!Cast<ACharacter>(OtherActor))
-	{
-		return;
-	}
+	if (!Cast<ACharacter>(OtherActor)) return;
 
 	// Compare doors direction to players direction 
 	if (GetActorForwardVector().Equals(OtherActor->GetActorForwardVector(), 0.5f))
@@ -104,16 +98,10 @@ void ASimpleDoor::BeginCollisionOverlap(UPrimitiveComponent* OverlappedComponent
 void ASimpleDoor::EndCollisionOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
 	// Check is server authoritative 
-	if (!HasAuthority())
-	{
-		return;
-	}
+	if (!HasAuthority()) return;
 
 	// Check is character
-	if (!Cast<ACharacter>(OtherActor))
-	{
-		return;
-	}
+	if (!Cast<ACharacter>(OtherActor)) return;
 
 	bIsOpen = false;
 	OnRep_IsOpen(); // Manually call RepNotify as "ReplicatedUsing" function is not automatically called for server
@@ -124,11 +112,11 @@ void ASimpleDoor::OnRep_IsOpen()
 {
 	if (bIsOpen)
 	{
-		OpenDoor();
+		OpenTimeline.Play();
 	}
 	else
 	{
-		CloseDoor();
+		OpenTimeline.Reverse();
 	}
 }
 
@@ -139,16 +127,4 @@ void ASimpleDoor::OpenUpdate(float Alpha)
 	FQuat BQuat(FOpenAngle);
 	
 	Pivot->SetRelativeRotation(FQuat::Slerp(AQuat, BQuat, Alpha));
-}
-
-// Play open door timeline
-void ASimpleDoor::OpenDoor()
-{
-	OpenTimeline.Play();
-}
-
-// Reverse open door timeline
-void ASimpleDoor::CloseDoor()
-{
-	OpenTimeline.Reverse();
 }
