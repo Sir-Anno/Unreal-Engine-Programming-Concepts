@@ -78,12 +78,4 @@ protected:
 	// Timeline update
 	UFUNCTION()
 	void OpenUpdate(float Alpha);
-
-	// Open door
-	UFUNCTION()
-	void OpenDoor();
-
-	// Close door
-	UFUNCTION()
-	void CloseDoor();
 };
