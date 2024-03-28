@@ -1,6 +1,4 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
-
-#pragma once
+﻿#pragma once
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
@@ -17,7 +15,7 @@ class UNREALENGINE_DEMOS_API ASimpleDoor : public AActor
 
 	// Default scene root
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<USceneComponent> DefaultSceneRoot;
+	TObjectPtr<USceneComponent> SceneRoot;
 	
 	// Pivot
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
@@ -77,5 +75,5 @@ protected:
 
 	// Timeline update
 	UFUNCTION()
-	void OpenUpdate(float Alpha);
+	void TimelineUpdate(float Alpha);
 };

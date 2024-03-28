@@ -1,6 +1,4 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
-
-#include "SimpleDoor.h"
+﻿#include "SimpleDoor.h"
 #include "Components/BoxComponent.h"
 #include "GameFramework/Character.h"
 #include "Components/TimelineComponent.h"
@@ -12,29 +10,33 @@ ASimpleDoor::ASimpleDoor()
 	// Set this actor to call Tick() every frame
 	PrimaryActorTick.bCanEverTick = true;
 
-	// Set is replicates
+	// Enable replication
 	bReplicates = true;
 
-	// Create default scene root
-	DefaultSceneRoot = CreateDefaultSubobject<USceneComponent>("DefaultSceneRoot");
-	SetRootComponent(DefaultSceneRoot);
+	// Default scene root
+	SceneRoot = CreateDefaultSubobject<USceneComponent>("DefaultSceneRoot");
+	SetRootComponent(SceneRoot);
 
-	// Create pivot scene component
+	// Pivot scene component
 	Pivot = CreateDefaultSubobject<USceneComponent>("Pivot");
 	Pivot->SetupAttachment(RootComponent);
 	Pivot->bVisualizeComponent = true;
 
-	// Create door frame mesh
-	DoorFrameMesh = CreateDefaultSubobject<UStaticMeshComponent>("DoorFrameMesg");
+	// Door frame mesh
+	DoorFrameMesh = CreateDefaultSubobject<UStaticMeshComponent>("DoorFrameMesh");
 	DoorFrameMesh->SetupAttachment(RootComponent);
 
-	// Create and attach door mesh to pivot
+	// Door mesh
 	DoorMesh = CreateDefaultSubobject<UStaticMeshComponent>("DoorMesh");
 	DoorMesh->SetupAttachment(Pivot);
 
-	// Create collision box
+	// Collision box
 	CollisionBox = CreateDefaultSubobject<UBoxComponent>("BoxCollision");
 	CollisionBox->SetupAttachment(RootComponent);
+
+	// Collision box overlaps
+	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &ASimpleDoor::BeginCollisionOverlap);
+	CollisionBox->OnComponentEndOverlap.AddDynamic(this, &ASimpleDoor::EndCollisionOverlap);
 }
 
 // Begin play
@@ -42,13 +44,11 @@ void ASimpleDoor::BeginPlay()
 {
 	Super::BeginPlay();
 
-	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &ASimpleDoor::BeginCollisionOverlap);
-	CollisionBox->OnComponentEndOverlap.AddDynamic(this, &ASimpleDoor::EndCollisionOverlap);
-
+	// Set up timeline
 	if (OpenCurve)
 	{
 		FOnTimelineFloat TimelineProgress;
-		TimelineProgress.BindUFunction(this, FName("OpenUpdate"));
+		TimelineProgress.BindUFunction(this, FName("TimelineUpdate"));
 
 		OpenTimeline.AddInterpFloat(OpenCurve, TimelineProgress);
 	}
@@ -121,7 +121,7 @@ void ASimpleDoor::OnRep_IsOpen()
 }
 
 // Update door rotation
-void ASimpleDoor::OpenUpdate(float Alpha)
+void ASimpleDoor::TimelineUpdate(float Alpha)
 {
 	FQuat AQuat(FCloseAngle);
 	FQuat BQuat(FOpenAngle);
