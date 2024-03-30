@@ -109,15 +109,18 @@ void AFirstPersonCharacter::Server_InteractEvent_Implementation()
 	Params.AddIgnoredActor(this);
 	
 	// Did we hit something?
-	if (GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECC_Visibility, Params)) 
+	if (!GetWorld()->LineTraceSingleByChannel(HitResult, Start, End, ECC_Visibility, Params)) return;
+	
+	// Does hit component have "PlayerInteractable" tag
+	if (HitResult.GetComponent()->ComponentHasTag("PlayerInteractable"))
 	{
-		// Does hit actor inherit from interact interface?
-		if (IInteractInterface* InteractInterface = Cast<IInteractInterface>(HitResult.GetActor())) 
+		// If hit actor implements IInteractInterface call interaction
+		if (IInteractInterface* HitActor = Cast<IInteractInterface>(HitResult.GetActor()))
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Cyan, FString::Printf(TEXT("Interacting with: %s"), *HitResult.GetActor()->GetName()));
-			InteractInterface->Interact();
+			HitActor->Interact();
 		}
 	}
+	
 	// Debug line trace
 	DrawDebugLineTraceSingle(GetWorld(), Start, End, EDrawDebugTrace::ForDuration, HitResult.IsValidBlockingHit(), HitResult, FColor::Red, FColor::Green, 2.0f);
 }

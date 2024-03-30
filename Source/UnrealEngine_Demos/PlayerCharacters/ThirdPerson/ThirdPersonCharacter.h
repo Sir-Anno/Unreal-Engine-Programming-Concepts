@@ -16,27 +16,27 @@ class AThirdPersonCharacter : public ACharacter
 	GENERATED_BODY()
 
 	// Camera boom
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, Category = Camera)
 	TObjectPtr<USpringArmComponent> SpringArm;
 
 	// Camera
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, Category = Camera)
 	TObjectPtr<UCameraComponent> Camera;
 	
 	// MappingContext
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, Category = Input)
 	TObjectPtr<UInputMappingContext> DefaultMappingContext;
 
 	// Move Input Action
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, Category = Input)
 	TObjectPtr<UInputAction> MoveAction;
 
 	// Look Input Action
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, Category = Input)
 	TObjectPtr<UInputAction> LookAction;
 
 	// Jump Input Action
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, Category = Input)
 	TObjectPtr<UInputAction> JumpAction;
 
 public:

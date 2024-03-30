@@ -1,6 +1,6 @@
 ﻿#include "PushButton.h"
 #include "Kismet/GameplayStatics.h"
-#include "UnrealEngine_Demos/Interfaces/TriggerInterface.h"
+#include "UnrealEngine_Demos/Interfaces/InteractInterface.h"
 
 
 // Sets default values
@@ -96,9 +96,9 @@ void APushButton::TimelineFinished()
 	for (AActor* Element : ActorsToTrigger)
 	{
 		// Does actor inherit from trigger interface?
-		if (ITriggerInterface* TriggerInterface = Cast<ITriggerInterface>(Element)) 
+		if (IInteractInterface* ActorToTrigger = Cast<IInteractInterface>(Element)) 
 		{
-			TriggerInterface->Trigger();
+			ActorToTrigger->Interact();
 		}
 	}
 

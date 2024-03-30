@@ -17,27 +17,27 @@ class UNREALENGINE_DEMOS_API AFirstPersonCharacter : public ACharacter, public I
 	GENERATED_BODY()
 
 	// Camera
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, Category = Camera)
 	TObjectPtr<UCameraComponent> Camera;
 
 	// MappingContext
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, Category = Input)
 	TObjectPtr<UInputMappingContext> DefaultMappingContext;
 
 	// Move Input Action
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, Category = Input)
 	TObjectPtr<UInputAction> MoveAction;
 
 	// Look Input Action
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, Category = Input)
 	TObjectPtr<UInputAction> LookAction;
 
 	// Jump Input Action
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, Category = Input)
 	TObjectPtr<UInputAction> JumpAction;
 
 	// Interact Input Action
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, Category = Input)
 	TObjectPtr<UInputAction> InteractAction;
 
 public:

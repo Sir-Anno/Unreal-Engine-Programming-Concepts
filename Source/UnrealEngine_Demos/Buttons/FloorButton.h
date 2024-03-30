@@ -3,35 +3,35 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Components/TimelineComponent.h"
-#include "UnrealEngine_Demos/Interfaces/TriggerInterface.h"
+#include "UnrealEngine_Demos/Interfaces/InteractInterface.h"
 #include "FloorButton.generated.h"
 
 class USphereComponent;
 class UCurveFloat;
 
 UCLASS()
-class UNREALENGINE_DEMOS_API AFloorButton : public AActor, public ITriggerInterface
+class UNREALENGINE_DEMOS_API AFloorButton : public AActor, public IInteractInterface
 {
 	GENERATED_BODY()
 	
 	// Ring mesh
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
+	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UStaticMeshComponent> RingMesh;
 
 	// Button mesh
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
+	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UStaticMeshComponent> ButtonMesh;
 
 	// Collision sphere
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
+	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USphereComponent> CollisionSphere;
 
 	// Activation sound
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = true));
+	UPROPERTY(EditAnywhere);
 	TObjectPtr<USoundBase> ActivationSound;
 
 	// Curve float
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere)
 	TObjectPtr<UCurveFloat> PushCurve;
 
 	// Timeline

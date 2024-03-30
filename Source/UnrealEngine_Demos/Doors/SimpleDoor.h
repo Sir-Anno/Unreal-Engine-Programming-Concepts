@@ -14,37 +14,37 @@ class UNREALENGINE_DEMOS_API ASimpleDoor : public AActor
 	GENERATED_BODY()
 
 	// Default scene root
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USceneComponent> SceneRoot;
 	
 	// Pivot
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<USceneComponent> Pivot;
 
 	// Door frame mesh
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UStaticMeshComponent> DoorFrameMesh;
 
 	// Door mesh
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UStaticMeshComponent> DoorMesh;
 
 	// Collision box
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UBoxComponent> CollisionBox;
 
 	// Is open
-	UPROPERTY(ReplicatedUsing = OnRep_IsOpen, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(ReplicatedUsing = OnRep_IsOpen)
 	bool bIsOpen;
 
 	// Rotation amount
-	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(Replicated)
 	FRotator FCloseAngle;
-	UPROPERTY(Replicated, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(Replicated)
 	FRotator FOpenAngle;
 
 	// Curve float
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere)
 	TObjectPtr<UCurveFloat> OpenCurve;
 
 	// Timeline
