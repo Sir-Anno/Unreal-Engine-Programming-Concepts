@@ -3,4 +3,4 @@ This project is an ongoing collection of mechanics and systems I've created in U
 
 Everything is setup to be multiplayer ready and easy to migrate to other projects with versions created in Blueprint and C++.
 
-[## Read about the project on my portfolio](https://siranno340a91bacc.wordpress.com/2024/03/23/unrealengineprogrammingconcepts/)
+[Read about the project on my portfolio](https://siranno340a91bacc.wordpress.com/2024/03/23/unrealengineprogrammingconcepts/)
